@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Player</title>
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.6.12/plyr.css" />
+    <style>
+        .plyr__controls {
+            display: flex;
+            justify-content: space-between;
+        }
+        .plyr__progress {
+            flex-grow: 1;
+            margin: 0 10px;
+        }
+        .plyr__time {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="plyr__controls">
+    <button id="play-button" class="plyr__control" aria-label="Play">
+        <img src="play-button.svg" alt="Play" />
+    </button>
+    <div class="plyr__progress">
+        <div class="plyr__progress-bar"></div>
+        <div class="plyr__knob"></div>
+    </div>
+    <div id="speed-control" class="plyr__control" aria-label="Speed">
+        <img src="speed-icon.svg" alt="Speed" />
+    </div>
+    <div class="plyr__time">
+        <span class="plyr__time--current">0:00</span>
+        <span class="plyr__time--separator"> / </span>
+        <span class="plyr__time--duration">0:00</span>
+    </div>
+</div>
+
+<script src="https://cdn.plyr.io/3.6.12/plyr.polyfilled.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const player = new Plyr('#audio-player', {
+            controls: ['play', 'progress', 'current-time', 'duration'],
+            settings: []
+        });
+
+        const playButton = document.getElementById('play-button');
+        playButton.addEventListener('click', () => {
+            if (player.playing) {
+                player.pause();
+            } else {
+                player.play();
+            }
+        });
+
+        const speedControl = document.getElementById('speed-control');
+        speedControl.addEventListener('click', () => {
+            const newSpeed = player.speed === 1 ? 1.5 : 1;
+            player.speed = newSpeed;
+        });
+    });
+</script>
+
+</body>
+</html>
